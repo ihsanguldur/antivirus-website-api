@@ -1,5 +1,6 @@
 const Membership = require("../models/Membership.js");
 const asyncHandler = require("express-async-handler");
+const {successPresenter} = require("../utils/presenter");
 
 const createMembership = asyncHandler(async (req, res, next)=>{
 
@@ -20,12 +21,14 @@ const getAllMembership = asyncHandler(async (req, res, next)=>{
 
     const memberships = await Membership.find();
 
-    return res
+    return successPresenter(res, memberships);
+
+    /*return res
         .status(200)
         .json({
            success : true,
            data : memberships
-        });
+        });*/
 
 });
 

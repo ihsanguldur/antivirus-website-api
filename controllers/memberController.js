@@ -1,6 +1,7 @@
 const Member = require("../models/Member.js");
 const asyncHandler = require("express-async-handler");
 const CustomError = require("../utils/customError.js");
+const {successPresenter} = require("../utils/presenter");
 
 
 const createMember = asyncHandler(async (req, res, next) => {
@@ -14,11 +15,13 @@ const createMember = asyncHandler(async (req, res, next) => {
     }
 
     await Member.create({user : user, membership : membership});
-    return res
+
+    return successPresenter(res, undefined);
+    /*return res
         .status(200)
         .json({
            success : true
-        });
+        });*/
 
 
 });
@@ -32,12 +35,15 @@ const getMember = asyncHandler(async (req, res, next)=>{
     if(!member){
         return next(new CustomError("User does not have any membership.", 400));
     }
-    return res
+
+    return successPresenter(res, member);
+
+    /*return res
         .status(200)
         .json({
            success : true,
            data : member
-        });
+        });*/
 
 });
 

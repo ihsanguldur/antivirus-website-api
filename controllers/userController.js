@@ -2,6 +2,7 @@ const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/emailSender");
 const CustomError = require("../utils/customError.js");
+const {successPresenter} = require("../utils/presenter");
 
 const createUser = asyncHandler(async (req, res, next)=>{
 
@@ -12,11 +13,13 @@ const createUser = asyncHandler(async (req, res, next)=>{
             email,
             password});
 
-        return res
+        return successPresenter(res, undefined);
+
+        /*return res
             .status(200)
             .json({
                 success : true
-            });
+            });*/
 });
 
 const login = asyncHandler( async (req,res,next)=> {
@@ -39,12 +42,14 @@ const login = asyncHandler( async (req,res,next)=> {
         return next(new CustomError("Password is not correct.", 400));
     }
 
-    return res
+    return successPresenter(res, user);
+
+    /*return res
         .status(200)
         .json({
             success : true,
             data : user
-        });
+        });*/
 
 });
 

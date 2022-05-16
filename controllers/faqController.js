@@ -1,5 +1,6 @@
 const FAQ = require("../models/FAQ.js");
 const asyncHandler = require("express-async-handler");
+const {successPresenter} = require("../utils/presenter.js");
 
 const getFaqs = asyncHandler(async (req, res, next)=>{
 
@@ -13,14 +14,13 @@ const getFaqs = asyncHandler(async (req, res, next)=>{
     }else{
         faqs = await FAQ.find();
     }
-
-
-    return res
+    return successPresenter(res, faqs);
+    /*return res
         .status(200)
         .json({
             success : true,
             data : faqs
-        });
+        });*/
 });
 
 module.exports = {
