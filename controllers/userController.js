@@ -56,7 +56,6 @@ const login = asyncHandler( async (req,res,next)=> {
 const sendResetEmail = asyncHandler(async (req, res, next)=>{
 
     const {email} = req.body;
-
     const user = await User.findOne({email : email});
 
     if(!user){
@@ -81,12 +80,14 @@ const sendResetEmail = asyncHandler(async (req, res, next)=>{
 
     await user.save();
 
-    return res
+    return successPresenter(res,"Please check your email.");
+
+    /*return res
         .status(200)
         .json({
             success : true,
             message : "Please check your email."
-        });
+        });*/
 });
 
 const resetPassword = asyncHandler(async (req, res, next)=>{
@@ -111,12 +112,14 @@ const resetPassword = asyncHandler(async (req, res, next)=>{
 
     await user.save();
 
-    return res
+    return successPresenter(res, "Password is changed.");
+
+    /*return res
         .status(200)
         .json({
             success : true,
             message : "Password is changed."
-        });
+        });*/
 
 });
 

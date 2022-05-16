@@ -8,12 +8,15 @@ const createMembership = asyncHandler(async (req, res, next)=>{
 
     const newMembership = await Membership.create({name, price, features});
 
-    return res
+    return successPresenter(res, newMembership);
+
+
+    /*return res
         .status(200)
         .json({
            success : true,
            data : newMembership
-        });
+        });*/
 
 });
 
