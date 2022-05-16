@@ -1,4 +1,5 @@
 const express = require("express");
+const socket = require("socket.io");
 const dotenv = require("dotenv");
 const databaseConnection = require("./config/dbconnection.js");
 const routers = require("./routers");
@@ -13,6 +14,29 @@ const {PORT} = process.env;
 databaseConnection();
 
 const app = express();
+
+const server = app.listen(PORT,()=>{
+    console.log("server started on "+PORT);
+});
+
+const io = socket(server,{
+    cors : {
+        origin : 'http://localhost:3000'
+    }
+});
+
+//burası kurulan bağlantı emitleri burada karşılaman lazım. connection eventi bağlantıları yakalıyor.
+io.on('connection',(socket)=>{
+   console.log(socket.id);
+
+    //socketten gelen chat eventini yakaladık.
+    socket.on('chat',data => {
+        console.log("merhaba");
+        console.log(data.message);
+        console.log(data.sender);
+    });
+});
+
 
 app.use(function (req, res, next) {
 
@@ -35,7 +59,3 @@ app.use(function (req, res, next) {
 app.use(express.json());
 app.use("/api", routers);
 app.use(errorHandler);
-
-app.listen(PORT,()=>{
-    console.log("server started on "+PORT);
-});

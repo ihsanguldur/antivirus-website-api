@@ -14,7 +14,6 @@ const createMember = asyncHandler(async (req, res, next) => {
     }
 
     await Member.create({user : user, membership : membership});
-
     return res
         .status(200)
         .json({

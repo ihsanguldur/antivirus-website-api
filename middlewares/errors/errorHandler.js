@@ -1,3 +1,4 @@
+const {errorPresenter} = require("../../utils/presenter.js");
 
 let message = "something went wrong";
 let status = 500;
@@ -21,13 +22,13 @@ const errorHandler = (err, req, res, next) =>{
         status = err.status;
         message = err.message;
     }
-
-    return res
+    return errorPresenter(res, status, message);
+    /*return res
         .status(status)
         .json({
             success : false,
             message : message
-        });
+        });*/
 
 }
 
