@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/emailSender");
 const CustomError = require("../utils/customError.js");
 const {successPresenter} = require("../utils/presenter");
+const {isEmailValid} = require("../utils/validator");
 
 const createUser = asyncHandler(async (req, res, next)=>{
 
@@ -123,9 +124,35 @@ const resetPassword = asyncHandler(async (req, res, next)=>{
 
 });
 
+const updateUser = asyncHandler(async (req, res, next)=>{
+    const {name, surname, email} = req.body;
+    const {id} = req.params;
+
+    if(name === "" || surname === "" ||email === ""){
+        return next(new CustomError("Please check your inputs.",400));
+    }
+
+    if(!isEmailValid(email)){
+        return next(new CustomError("Email is not valid.",400));
+    }
+
+    let updatedUser = await User.findOneAndUpdate({_id : id},{name, surname, email},{
+        new : true
+    });
+    if(!updatedUser){
+        return next(new CustomError("User not found.",401));
+    }
+
+    await updatedUser.save();
+
+    return successPresenter(res, updatedUser);
+
+});
+
 module.exports = {
     createUser,
     login,
     sendResetEmail,
-    resetPassword
+    resetPassword,
+    updateUser
 };
