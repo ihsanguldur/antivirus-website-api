@@ -8,18 +8,15 @@ const liveSupportSchema = new Schema({
         default : "classic",
         enum : ["classic","Technical"]
     },
-    sender : [
-        {
+    sender : {
             type : mongoose.Schema.ObjectId,
             ref : "User"
-        }
-    ],
-    supporter : [
-        {
+    },
+    supporter : {
             type : mongoose.Schema.ObjectId,
+            default : null,
             ref : "User"
-        }
-    ],
+    },
     messages : [
         {
             type : mongoose.Schema.ObjectId,
@@ -30,6 +27,10 @@ const liveSupportSchema = new Schema({
         type : String,
         default : "pending",
         enum : ["done","pending","resuming"]
+    },
+    createdAt : {
+        type : Date,
+        default : Date.now
     }
 });
 

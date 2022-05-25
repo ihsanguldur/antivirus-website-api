@@ -27,7 +27,7 @@ const io = socket(server,{
 
 //burası kurulan bağlantı emitleri burada karşılaman lazım. connection eventi bağlantıları yakalıyor.
 io.on('connection',(socket)=>{
-   console.log(socket.id);
+   //console.log(socket.id);
 
     //socketten gelen chat eventini yakaladık.
     socket.on('chat',data => {
@@ -38,7 +38,7 @@ io.on('connection',(socket)=>{
 });
 
 
-app.use(function (req, res, next) {
+/*app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
@@ -55,7 +55,7 @@ app.use(function (req, res, next) {
 
     // Pass to next layer of middleware
     next();
-});
+});*/
 app.use(express.json());
 app.use("/api", routers);
 app.use(errorHandler);

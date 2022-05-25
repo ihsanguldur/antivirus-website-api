@@ -4,7 +4,6 @@ let message = "something went wrong";
 let status = 500;
 
 const errorHandler = (err, req, res, next) =>{
-    console.log(err)
     if (err.name === "ValidationError") { // for email and password.
         //let errors = {};
         message = "check this inputs : ";
