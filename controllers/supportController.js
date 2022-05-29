@@ -25,7 +25,16 @@ const updateClassicSupportRequest = asyncHandler(async (req, res, next)=>{
 
 });
 
+const getPendingSupportRequests = asyncHandler(async (req,res, next)=>{
+
+    const pendingSupportRequests = await LiveSupport.find().populate("sender").populate("supporter");
+
+    return successPresenter(res, pendingSupportRequests);
+
+});
+
 module.exports = {
     createClassicSupportRequest,
-    updateClassicSupportRequest
+    updateClassicSupportRequest,
+    getPendingSupportRequests
 }

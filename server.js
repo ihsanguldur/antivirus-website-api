@@ -38,7 +38,7 @@ io.on('connection',(socket)=>{
 });
 
 
-/*app.use(function (req, res, next) {
+app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
@@ -55,7 +55,7 @@ io.on('connection',(socket)=>{
 
     // Pass to next layer of middleware
     next();
-});*/
+});
 app.use(express.json());
 app.use("/api", routers);
 app.use(errorHandler);
