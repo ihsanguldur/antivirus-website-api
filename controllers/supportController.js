@@ -1,12 +1,17 @@
 const asyncHandler = require("express-async-handler");
 const LiveSupport = require("../models/LiveSupport");
+const CustomError = require("../utils/customError.js");
 const {successPresenter} = require("../utils/presenter");
 
 const createClassicSupportRequest = asyncHandler(async (req, res, next)=>{
 
-    const {sender, supporter, messages, state} = req.body;
+    const {sender,membership , supporter, messages, state} = req.body;
 
-    await LiveSupport.create({sender, supporter, messages, state});
+    const supportExists = await LiveSupport.exists({sender, state : "pending"})
+    if(supportExists) {
+        return next(new CustomError("You have pending support request.",400))
+    }
+    await LiveSupport.create({sender, membership, supporter, messages, state});
 
     return successPresenter(res, undefined);
 
@@ -14,9 +19,9 @@ const createClassicSupportRequest = asyncHandler(async (req, res, next)=>{
 
 const updateClassicSupportRequest = asyncHandler(async (req, res, next)=>{
 
-    const {_id, sender, supporter, messages, state} = req.body;
+    const {_id, sender, membership, supporter, messages, state} = req.body;
 
-    const supportRequest = await LiveSupport.findOneAndUpdate({_id}, {sender, supporter, messages, state},{
+    const supportRequest = await LiveSupport.findOneAndUpdate({_id}, {sender, membership, supporter, messages, state},{
         new : true
     });
 

@@ -23,6 +23,9 @@ const liveSupportSchema = new Schema({
             ref : "Message"
         }
     ],
+    membership : {
+        type : String
+    },
     state : {
         type : String,
         default : "pending",
