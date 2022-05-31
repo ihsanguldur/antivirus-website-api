@@ -20,7 +20,6 @@ const createClassicSupportRequest = asyncHandler(async (req, res, next)=>{
 const updateClassicSupportRequest = asyncHandler(async (req, res, next)=>{
 
     const {_id, sender, membership, supporter, messages, state} = req.body;
-
     const supportRequest = await LiveSupport.findOneAndUpdate({_id}, {sender, membership, supporter, messages, state},{
         new : true
     });
